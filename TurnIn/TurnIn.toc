@@ -1,7 +1,8 @@
-## Interface: 80000
-## X-Compatible-With: 80000
-## Title: Turn In
+## Interface: 11200
+## X-Compatible-With: 11200
+## Title: Turn In [backported]
 ## Notes: Automates the selection of quest and gossip options.
+## Notes-ruRU: Автоматизирует выбор диалога и заданий.
 ## SavedVariables: TI_status, TI_NPCDB, TI_NPCIndex
-## Version: 2.1
+## Version: 2.1.9
 TurnIn.xml

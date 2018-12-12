@@ -1,4 +1,5 @@
  <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+	<Script file="localization.lua" />
 	<Script file="TurnIn.lua" />
 	<Script file="TurnInUI.lua" />
 	
@@ -30,8 +31,8 @@
 		</Backdrop>
 		<Scripts>
 			<OnLoad>
-				self:SetBackdropBorderColor(0.4, 0.4, 0.4);
-				self:SetBackdropColor(0.5, 0.5, 0.5);
+				this:SetBackdropBorderColor(0.4, 0.4, 0.4);
+				this:SetBackdropColor(0.5, 0.5, 0.5);
 			</OnLoad>
 		</Scripts>
 	</Frame>
@@ -43,10 +44,10 @@
 		</Size>
 		<Scripts><!--
 			<OnEnter>
-				getglobal(self:GetName() .. "_Background"):SetVertexColor(1,1,1,0.4);
+				getglobal(this:GetName() .. "_Background"):SetVertexColor(1,1,1,0.4);
 			</OnEnter>
 			<OnLeave>
-				getglobal(self:GetName() .. "_Background"):SetVertexColor(0,0,0,0.4);
+				getglobal(this:GetName() .. "_Background"):SetVertexColor(0,0,0,0.4);
 			</OnLeave>
 			-->
 		</Scripts>
@@ -63,13 +64,13 @@
 				</Size>
 				<Scripts>
 					<OnEnter>
-						TI_OptionListCheckboxTooltip(self);
+						TI_OptionListCheckboxTooltip(this);
 					</OnEnter>
 					<OnLeave>
 						TI_TooltipHide();
 					</OnLeave>
 					<OnClick>
-						TI_OptionToggle(self);
+						TI_OptionToggle(this);
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -86,13 +87,13 @@
 				</Anchors>
 				<Scripts>
 					<OnEnter>
-						TI_TooltipMessage(self, "Decrease this option's priority.");
+						TI_TooltipMessage(this, TI_DECREASE_PRIORITY);
 					</OnEnter>
 					<OnLeave>
 						TI_TooltipHide();
 					</OnLeave>
 					<OnClick>
-						TI_OptionMove(self, 1);
+						TI_OptionMove(this, 1);
 					</OnClick>
 				</Scripts>
 				<NormalTexture file="Interface\ChatFrame\UI-ChatIcon-ScrollDown-Up"/>
@@ -113,10 +114,10 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						TI_OptionMove(self, -1);
+						TI_OptionMove(this, -1);
 					</OnClick>
 					<OnEnter>
-						TI_TooltipMessage(self, "Increase this option's priority.");
+						TI_TooltipMessage(this, TI_INCREASE_PRIORITY);
 					</OnEnter>
 					<OnLeave>
 						TI_TooltipHide();
@@ -199,18 +200,18 @@
 				</Size>
 				<Scripts>
 					<OnClick>
-						TI_NPCToggle(self);
-						TI_NPCListCheckboxTooltip(self);
+						TI_NPCToggle(this);
+						TI_NPCListCheckboxTooltip(this);
 					</OnClick>
 					<OnEnter>
-						TI_NPCListCheckboxTooltip(self);
+						TI_NPCListCheckboxTooltip(this);
 					</OnEnter>
 					<OnLeave>
 						TI_TooltipHide();
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-			<Button name="$parent_Delete" hidden="false" inherits="OptionsButtonTemplate" text="X">
+			<Button name="$parent_Delete" hidden="false" inherits="OptionsButtonTemplate" text="-">
 				<Anchors>
 					<Anchor point="RIGHT">
 						<Offset>
@@ -223,13 +224,13 @@
 				</Size>
 				<Scripts>
 					<OnEnter>
-						TI_TooltipMessage(self, "Delete this NPC.");
+						TI_TooltipMessage(this, TI_DELETE_NPC);
 					</OnEnter>
 					<OnLeave>
 						TI_TooltipHide();
 					</OnLeave>
 					<OnClick>
-						TI_DeleteNPCIndex(self);
+						TI_DeleteNPCIndex(this);
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -249,7 +250,7 @@
 		</Layers>
 		<Scripts>
 			<OnClick>
-				TI_SelectNPCIndex(self);
+				TI_SelectNPCIndex(this);
 			</OnClick>
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
@@ -260,7 +261,7 @@
 	<Frame Name="TI_TempNPCListEntry" virtual="true" hidden="true">
 		<Scripts>
 			<OnEnter>
-				TI_TempNPCListTooltipShow(self);
+				TI_TempNPCListTooltipShow(this);
 			</OnEnter>
 			<OnLeave>
 				TI_TooltipHide();
@@ -284,7 +285,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="$parent_Delete" hidden="false" inherits="OptionsButtonTemplate" text="X">
+			<Button name="$parent_Delete" hidden="false" inherits="OptionsButtonTemplate" text="-">
 				<Anchors>
 					<Anchor point="TOPRIGHT">
 						<Offset>
@@ -297,10 +298,10 @@
 				</Size>
 				<Scripts>
 					<OnClick>
-						TI_DeleteTempNPCIndex(self:GetParent():GetID());
+						TI_DeleteTempNPCIndex(this:GetParent():GetID());
 					</OnClick>
 					<OnEnter>
-						TI_TooltipMessage(self, "Delete");
+						TI_TooltipMessage(this, DELETE);
 					</OnEnter>
 					<OnLeave>
 						TI_TooltipHide();
@@ -320,10 +321,10 @@
 				</Size>
 				<Scripts>
 					<OnClick>
-						TI_AddTempNPCIndex(self:GetParent():GetID());
+						TI_AddTempNPCIndex(this:GetParent():GetID());
 					</OnClick>
 					<OnEnter>
-						TI_TooltipMessage(self, "Add this NPC to the database");
+						TI_TooltipMessage(this, TI_ADD_NPC);
 					</OnEnter>
 					<OnLeave>
 						TI_TooltipHide();
@@ -342,7 +343,7 @@
 		</Anchors>
 		<Layers>
 			<Layer level="ARTWORK">
-				<FontString inherits="GameFontNormal" text="Recently Visited NPCs">
+				<FontString inherits="GameFontNormal" text="TI_RECENTLY_FRAME">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
 							<Offset><AbsDimension x="6" y="-7" /></Offset>
@@ -416,27 +417,27 @@
 		</Backdrop>
 		<Scripts>
 			<OnMouseUp>
-				if ( self.isMoving ) then
-					self:StopMovingOrSizing();
-					self.isMoving = false;
+				if ( this.isMoving ) then
+					this:StopMovingOrSizing();
+					this.isMoving = false;
 				end
 			</OnMouseUp>
 			<OnMouseDown>
-				if (  button == "LeftButton" ) then
-					self:StartMoving();
-					self.isMoving = true;
+				if (  arg1 == "LeftButton" ) then
+					this:StartMoving();
+					this.isMoving = true;
 				end
 			</OnMouseDown>
 			<OnHide>
-				if ( self.isMoving ) then
-					self:StopMovingOrSizing();
-					self.isMoving = false;
+				if ( this.isMoving ) then
+					this:StopMovingOrSizing();
+					this.isMoving = false;
 				end
 			</OnHide>
 		</Scripts>
 	</Frame>
 	
-	<Frame Name="TI_OptionsFrame" frameStrata="DIALOG" toplevel="true" enableMouse="true" enableMouseWheel="true" movable="true" parent="UIParent">
+	<Frame Name="TI_OptionsFrame" frameStrata="DIALOG" toplevel="true" enableMouse="true" enableMouseWheel="true" movable="true" parent="UIParent" hidden="true">
 		<TitleRegion>
 			<Size>
 				<AbsDimension x="128" y="64"/>
@@ -487,7 +488,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<FontString inherits="GameFontNormal" text="Turn In Options">
+				<FontString inherits="GameFontNormal" text="TI_OPTIONS_FRAME">
 					<Anchors>
 						<Anchor point="TOP" relativeTo="$parentOptionFrameHeader">
 							<Offset>
@@ -505,7 +506,7 @@
 				<Anchors> 
 					<Anchor point="TOPRIGHT">
 						<Offset>
-							<AbsDimension x="0" y="0"/>
+							<AbsDimension x="-7" y="-7"/>
 						</Offset>
 					</Anchor>
 				</Anchors> 
@@ -539,14 +540,14 @@
 						</Size>
 						<Scripts>
 							<OnClick>
-								TI_StatusIndicator_CheckFn(self);
+								TI_StatusIndicator_CheckFn(this);
 							</OnClick>
 						</Scripts>
 					</CheckButton>
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="$parent_Text" inherits="GameFontNormal" text="Turn In is ">
+						<FontString name="$parent_Text" inherits="GameFontNormal" text="TI_STATE">
 							<Anchors>
 								<Anchor point="LEFT">
 									<Offset>
@@ -601,7 +602,7 @@
 						</Size>
 						<Scripts>
 							<OnClick>
-								TI_SettingCheckboxFn(self, "usedefault");
+								TI_SettingCheckboxFn(this, "usedefault");
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -621,14 +622,14 @@
 						</Size>
 						<Scripts>
 							<OnClick>
-								TI_SettingCheckboxFn(self, "autoadd");
+								TI_SettingCheckboxFn(this, "autoadd");
 							</OnClick>
 						</Scripts>
 					</CheckButton>
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="$parent_UseDefault_Text" inherits="GameFontNormal" text="Use default options for unlisted NPCs">
+						<FontString name="$parent_UseDefault_Text" inherits="GameFontNormal" text="TI_NPC_DEFAULT_OPTIONS">
 							<Anchors>
 								<Anchor point="TOPLEFT">
 									<Offset>
@@ -637,7 +638,7 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="$parent_AddAutomatically_Text" inherits="GameFontNormal" text="Automatically add new NPCs">
+						<FontString name="$parent_AddAutomatically_Text" inherits="GameFontNormal" text="TI_ADD_NPC">
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parent_UseDefault_Text" relativePoint="BOTTOMLEFT">
 									<Offset>
@@ -658,9 +659,9 @@
 			<Frame name="TI_OptionsPriorityContainer" inherits="TI_OptionFrameBoxTemplate">
 				<Scripts>
 					<OnLoad>
-						self:SetBackdropBorderColor(0.4, 0.4, 0.4);
-						self:SetBackdropColor(0.15, 0.15, 0.15);
-						getglobal(self:GetName().."Title"):SetText("Gossip Options Priority List");
+						this:SetBackdropBorderColor(0.4, 0.4, 0.4);
+						this:SetBackdropColor(0.15, 0.15, 0.15);
+						getglobal(this:GetName().."Title"):SetText(TI_PRIORITY_LIST);
 					</OnLoad>
 				</Scripts>
 				<Anchors>
@@ -865,9 +866,9 @@
 			<Frame name="TI_OptionsNPCContainer" inherits="TI_OptionFrameBoxTemplate">
 				<Scripts>
 					<OnLoad>
-						self:SetBackdropBorderColor(0.4, 0.4, 0.4);
-						self:SetBackdropColor(0.15, 0.15, 0.15);
-						getglobal(self:GetName().."Title"):SetText("NPC Database");
+						this:SetBackdropBorderColor(0.4, 0.4, 0.4);
+						this:SetBackdropColor(0.15, 0.15, 0.15);
+						getglobal(this:GetName().."Title"):SetText(TI_NPC_DB);
 					</OnLoad>
 				</Scripts>
 				<Anchors>
@@ -897,8 +898,7 @@
 						</Anchors>
 						<Scripts>
 							<OnVerticalScroll>
-								--FauxScrollFrame_OnVerticalScroll(20, TI_NPCListScrollBarUpdate);
-								FauxScrollFrame_OnVerticalScroll(self, offset, 20, TI_NPCListScrollBarUpdate);
+								FauxScrollFrame_OnVerticalScroll(20, TI_NPCListScrollBarUpdate);
 							</OnVerticalScroll>
 							<OnShow>
 								TI_NPCListScrollBarUpdate();
@@ -987,8 +987,12 @@
 	
 	<Frame name="TurnIn" hidden="true" frameStrata="LOW" enableMouse="false">
 		<Scripts>
-			<OnLoad function="TI_OnLoad"/>
-			<OnEvent function="TI_OnEvent"/>
+			<OnLoad>
+				TI_OnLoad();
+			</OnLoad>
+			<OnEvent>
+				TI_OnEvent(event);
+			</OnEvent>
 		</Scripts>
 	</Frame>
 </Ui>
